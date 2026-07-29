@@ -1,0 +1,70 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alarm Clock</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/app.js' %}" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Alarm Clock</h1>
+    </header>
+
+    <main>
+      <section aria-labelledby="current-time-heading">
+        <h2 id="current-time-heading">Current time</h2>
+        <time datetime="00:00">00:00</time>
+        <p id="current-date" aria-live="polite"></p>
+        <button id="stop-alarm" type="button" hidden>Stop alarm</button>
+      </section>
+
+      <section aria-labelledby="new-alarm-heading">
+        <h2 id="new-alarm-heading">Set a new alarm</h2>
+        <form id="alarm-form" action="{% url 'alarm_create' %}" method="POST">
+          {% csrf_token %}
+          <p>
+            <label for="alarm-time">Time</label>
+            <input id="alarm-time" name="time" type="time" required>
+          </p>
+
+          <fieldset>
+            <legend>Repeat</legend>
+            <p>
+              <input id="repeat-once" name="repeat" type="radio" value="once" checked>
+              <label for="repeat-once">Once</label>
+            </p>
+            <p>
+              <input id="repeat-daily" name="repeat" type="radio" value="daily">
+              <label for="repeat-daily">Daily</label>
+            </p>
+          </fieldset>
+
+          <p>
+            <label for="alarm-label">Label</label>
+            <input id="alarm-label" name="label" type="text" placeholder="Alarm">
+          </p>
+
+          <button type="submit">Add alarm</button>
+        </form>
+      </section>
+
+      <section aria-labelledby="alarms-heading">
+        <h2 id="alarms-heading">Alarms</h2>
+        <ul id="alarms-list" aria-live="polite">
+          {% for alarm in alarms %}
+            {% include "alarms/_alarm_card.html" %}
+          {% endfor %}
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>Alarm Clock</p>
+    </footer>
+
+    <script id="alarms-data" type="application/json">{{ alarms_json|safe }}</script>
+  </body>
+</html>

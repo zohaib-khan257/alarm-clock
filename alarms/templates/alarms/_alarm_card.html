@@ -1,0 +1,19 @@
+{% comment %}Single alarm card rendered server-side for SSR initial load.{% endcomment %}
+<li data-alarm-id="{{ alarm.pk }}">
+  <article>
+    <h3>{{ alarm.label }}</h3>
+    <p>
+      <time datetime="{{ alarm.time|time:'H:i' }}">{{ alarm.time|time:'g:i A' }}</time>
+      {% if alarm.snooze_until %}, Snoozed{% else %}, {{ alarm.get_repeat_display }}{% endif %}
+    </p>
+    <p class="alarm-toggle">
+      <input type="checkbox" id="enabled-{{ alarm.pk }}" class="alarm-enabled-input"
+             {% if alarm.enabled %}checked{% endif %} data-alarm-id="{{ alarm.pk }}">
+      <label for="enabled-{{ alarm.pk }}">Enabled</label>
+    </p>
+    <p class="alarm-controls">
+      <button type="button" class="snooze-button" data-alarm-id="{{ alarm.pk }}">Snooze 5 min</button>
+      <button type="button" class="cancel-button" data-alarm-id="{{ alarm.pk }}">Cancel</button>
+    </p>
+  </article>
+</li>
