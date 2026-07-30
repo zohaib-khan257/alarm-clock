@@ -104,5 +104,4 @@ Your app will be live at `https://<your-app-name>.railway.app`.
 - **Database**: SQLite (dev) / PostgreSQL (production)
 - **Static files**: Whitenoise
 - **Alarm sound**: Web Audio API (client-side oscillator)
-# Alarm-System
 # alarm-clock
