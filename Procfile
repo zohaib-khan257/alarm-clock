@@ -1,1 +1,1 @@
-web: gunicorn alarm_clock.wsgi --log-file -
+web: gunicorn alarm_clock.wsgi --bind 0.0.0.0:$PORT --workers 4 --threads 2
